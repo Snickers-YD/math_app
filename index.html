@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二年级加法练习</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 48px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+        }
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+        .question {
+            font-size: 52px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 32px;
+            letter-spacing: 4px;
+        }
+        .question span {
+            color: #667eea;
+        }
+        .input-area {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .input-area input {
+            width: 120px;
+            padding: 14px 16px;
+            font-size: 24px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            outline: none;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+        .input-area input:focus {
+            border-color: #667eea;
+        }
+        .input-area button {
+            padding: 14px 28px;
+            font-size: 20px;
+            background: #667eea;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .input-area button:hover {
+            background: #5a6fd6;
+        }
+        .input-area button:active {
+            background: #4e63c2;
+        }
+        .result {
+            font-size: 22px;
+            font-weight: bold;
+            min-height: 40px;
+            margin-bottom: 20px;
+        }
+        .result.correct {
+            color: #22c55e;
+        }
+        .result.wrong {
+            color: #ef4444;
+        }
+        .next-btn {
+            padding: 10px 36px;
+            font-size: 16px;
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .next-btn:hover {
+            background: #e0e0e0;
+        }
+        .score {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🧮 加法小练习</h1>
+        <p class="subtitle">看看你能做对多少题！</p>
+
+        <div class="question" id="question">
+            <span id="num1">0</span> + <span id="num2">0</span> = ?
+        </div>
+
+        <div class="input-area">
+            <input type="number" id="answer" placeholder="?" autofocus>
+            <button id="checkBtn">检查</button>
+        </div>
+
+        <div class="result" id="result"></div>
+        <button class="next-btn" id="nextBtn">下一题</button>
+
+        <div class="score" id="score">已答 0 题 · 正确 0 题</div>
+    </div>
+
+    <script>
+        let correctCount = 0;
+        let totalCount = 0;
+
+        function randomInt(max) {
+            return Math.floor(Math.random() * (max + 1));
+        }
+
+        function newQuestion() {
+            const a = randomInt(9);
+            const b = randomInt(9);
+            document.getElementById('num1').textContent = a;
+            document.getElementById('num2').textContent = b;
+            document.getElementById('answer').value = '';
+            document.getElementById('result').textContent = '';
+            document.getElementById('result').className = 'result';
+            document.getElementById('answer').focus();
+            return a + b;
+        }
+
+        let currentAnswer = newQuestion();
+
+        document.getElementById('checkBtn').addEventListener('click', function () {
+            const input = document.getElementById('answer');
+            const userAnswer = parseInt(input.value);
+            const resultEl = document.getElementById('result');
+            const a = parseInt(document.getElementById('num1').textContent);
+            const b = parseInt(document.getElementById('num2').textContent);
+
+            if (isNaN(userAnswer)) {
+                resultEl.textContent = '请先输入答案哦～';
+                resultEl.className = 'result wrong';
+                return;
+            }
+
+            totalCount++;
+
+            if (userAnswer === currentAnswer) {
+                resultEl.textContent = '✅ 正确！太棒了！';
+                resultEl.className = 'result correct';
+                correctCount++;
+            } else {
+                resultEl.textContent = '❌ 错误，再想想哦～';
+                resultEl.className = 'result wrong';
+            }
+
+            document.getElementById('score').textContent =
+                '已答 ' + totalCount + ' 题 · 正确 ' + correctCount + ' 题';
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', function () {
+            currentAnswer = newQuestion();
+        });
+
+        document.getElementById('answer').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                document.getElementById('checkBtn').click();
+            }
+        });
+    </script>
+</body>
+</html>
