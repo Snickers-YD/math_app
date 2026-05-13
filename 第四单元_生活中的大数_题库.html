@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二年级下册 第四单元 生活中的大数 题库</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: linear-gradient(135deg, #fce4ec 0%, #e8f5e9 50%, #e3f2fd 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  .container {
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    padding: 40px;
+    max-width: 700px;
+    width: 100%;
+    margin: 20px auto;
+  }
+  h1 {
+    font-size: 28px;
+    text-align: center;
+    color: #1565c0;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #78909c;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #546e7a;
+  }
+  .progress {
+    background: #e0e0e0;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #42a5f5, #66bb6a);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+  .question-number {
+    display: inline-block;
+    background: #1565c0;
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .difficulty-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .diff-easy { background: #c8e6c9; color: #2e7d32; }
+  .diff-medium { background: #fff3e0; color: #e65100; }
+  .diff-hard { background: #ffcdd2; color: #c62828; }
+  .question-text {
+    font-size: 22px;
+    line-height: 1.6;
+    color: #263238;
+    margin-bottom: 28px;
+    padding: 16px;
+    background: #f5f7fa;
+    border-radius: 12px;
+    border-left: 4px solid #42a5f5;
+  }
+  .options { display: flex; flex-direction: column; gap: 12px; }
+  .option {
+    padding: 14px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s ease;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+  }
+  .option:hover { border-color: #90caf9; background: #e3f2fd; }
+  .option.selected { border-color: #1565c0; background: #bbdefb; font-weight: bold; }
+  .option .label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    margin-right: 14px;
+    font-weight: bold;
+    color: #555;
+    flex-shrink: 0;
+  }
+  .option.selected .label { background: #1565c0; color: #fff; }
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 28px;
+    gap: 12px;
+  }
+  .btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+  }
+  .btn:disabled { opacity: 0.7; cursor: not-allowed; }
+  .btn-primary { background: #1565c0; color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: #0d47a1; }
+  .btn-success { background: #43a047; color: #fff; }
+  .btn-success:hover:not(:disabled) { background: #2e7d32; }
+  .btn-outline { background: transparent; color: #546e7a; border: 2px solid #b0bec5; }
+  .btn-outline:hover:not(:disabled) { border-color: #78909c; color: #37474f; }
+  .result-card { text-align: center; padding: 30px 20px; }
+  .result-card .score { font-size: 72px; font-weight: bold; color: #1565c0; margin: 16px 0; }
+  .result-card .score-text { font-size: 20px; color: #546e7a; margin-bottom: 8px; }
+  .result-card .comment { font-size: 22px; margin-bottom: 24px; padding: 12px; border-radius: 12px; }
+  .result-card .comment.excellent { background: #e8f5e9; color: #2e7d32; }
+  .result-card .comment.good { background: #e3f2fd; color: #0d47a1; }
+  .result-card .comment.ok { background: #fff3e0; color: #e65100; }
+  .result-card .comment.poor { background: #ffcdd2; color: #c62828; }
+  .result-detail {
+    margin-top: 20px;
+    text-align: left;
+    max-height: 400px;
+    overflow-y: auto;
+    border-top: 2px solid #eceff1;
+    padding-top: 16px;
+  }
+  .result-detail .item { padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; font-size: 15px; }
+  .result-detail .item.correct-item { background: #e8f5e9; }
+  .result-detail .item.wrong-item { background: #ffcdd2; }
+  .result-detail .q { font-weight: bold; }
+  .result-detail .ans { margin-top: 2px; color: #546e7a; }
+  .hidden { display: none; }
+  .footer-info { text-align: center; margin-top: 20px; color: #b0bec5; font-size: 13px; }
+  @media (max-width: 520px) {
+    .container { padding: 20px 16px; }
+    h1 { font-size: 22px; }
+    .question-text { font-size: 18px; }
+    .option { font-size: 16px; padding: 12px 14px; }
+    .actions { flex-direction: column; }
+    .result-card .score { font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <h1>生活中的大数</h1>
+  <div class="subtitle">北师大版 · 二年级下册 · 第四单元</div>
+
+  <!-- 答题区 -->
+  <div id="quizArea">
+    <div class="status-bar">
+      <span class="question-number" id="qNum">第 1/10 题</span>
+      <span class="difficulty-tag" id="diffTag">基础</span>
+    </div>
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="actions">
+      <button class="btn btn-primary" id="btnNext" disabled>下一题 &rarr;</button>
+      <button class="btn btn-outline" id="btnReset">换一批题目</button>
+    </div>
+  </div>
+
+  <!-- 结果区 -->
+  <div id="resultArea" class="hidden">
+    <div class="result-card">
+      <div class="score-text">你的得分</div>
+      <div class="score" id="finalScore">0</div>
+      <div class="score-text">共 10 题</div>
+      <div class="comment" id="commentBox">继续加油！</div>
+      <div class="actions" style="justify-content:center">
+        <button class="btn btn-success" id="btnRetry">再做一套</button>
+      </div>
+      <div class="result-detail" id="resultDetail"></div>
+    </div>
+  </div>
+  <div class="footer-info">题库共 100 道题 &middot; 每次随机抽 10 道 &middot; 基础4题 + 中等4题 + 较难2题</div>
+</div>
+
+<script>
+// ===== 题库：100 道选择题 =====
+var ALL_QUESTIONS = [
+  // ===== 基础（40 题 1-40）=====
+  // 数位识别 1-8
+  { q: "5236 的千位上是几？", opts: ["5", "2", "3", "6"], ans: 0, diff: "easy" },
+  { q: "3842 的百位上是几？", opts: ["3", "8", "4", "2"], ans: 1, diff: "easy" },
+  { q: "6701 的十位上是几？", opts: ["6", "7", "0", "1"], ans: 2, diff: "easy" },
+  { q: "2058 的个位上是几？", opts: ["2", "0", "5", "8"], ans: 3, diff: "easy" },
+  { q: "9340 的千位上是几？", opts: ["9", "3", "4", "0"], ans: 0, diff: "easy" },
+  { q: "一个数的千位是 2，百位是 4，十位是 6，个位是 1，这个数是？", opts: ["2461", "2641", "2416", "2146"], ans: 0, diff: "easy" },
+  { q: "3702 中的“7”在什么位上？", opts: ["千位", "百位", "十位", "个位"], ans: 1, diff: "easy" },
+  { q: "四位数中，最高位是什么位？", opts: ["个位", "十位", "百位", "千位"], ans: 3, diff: "easy" },
+
+  // 读数 9-16
+  { q: "3000 读作什么？", opts: ["三千", "三百", "三万", "三十"], ans: 0, diff: "easy" },
+  { q: "5600 读作什么？", opts: ["五百六十", "五千六百", "五万六千", "五千零六十"], ans: 1, diff: "easy" },
+  { q: "9999 读作什么？", opts: ["九百九十九", "九千九百九", "九千九百九十九", "九千九百九十"], ans: 2, diff: "easy" },
+  { q: "10000 读作什么？", opts: ["一百", "一千", "一万", "十万"], ans: 2, diff: "easy" },
+  { q: "4000 读作什么？", opts: ["四百", "四千", "四万", "四十"], ans: 1, diff: "easy" },
+  { q: "6800 读作什么？", opts: ["六千八十", "六千八百", "六千零八", "六千八百八"], ans: 1, diff: "easy" },
+  { q: "4800 读作什么？", opts: ["四千八百", "四千八十", "四千零八", "四万八千"], ans: 0, diff: "easy" },
+  { q: "8000 读作什么？", opts: ["八百", "八千", "八万", "八十"], ans: 1, diff: "easy" },
+
+  // 写数 17-24
+  { q: "五千写作什么？", opts: ["500", "5000", "50000", "50"], ans: 1, diff: "easy" },
+  { q: "二千三百写作什么？", opts: ["230", "2300", "23000", "2030"], ans: 1, diff: "easy" },
+  { q: "一万写作什么？", opts: ["1000", "100", "10000", "100000"], ans: 2, diff: "easy" },
+  { q: "三千六百写作什么？", opts: ["360", "3600", "3060", "36000"], ans: 1, diff: "easy" },
+  { q: "四千写作什么？", opts: ["400", "4000", "40000", "40"], ans: 1, diff: "easy" },
+  { q: "八百写作什么？", opts: ["8", "80", "800", "8000"], ans: 2, diff: "easy" },
+  { q: "六百写作什么？", opts: ["6", "60", "600", "6000"], ans: 2, diff: "easy" },
+  { q: "二千写作什么？", opts: ["20", "200", "2000", "20000"], ans: 2, diff: "easy" },
+
+  // 数的组成 25-32
+  { q: "5000 由几个千组成？", opts: ["5个", "50个", "500个", "5000个"], ans: 0, diff: "easy" },
+  { q: "8 个千是多少？", opts: ["80", "800", "8000", "80000"], ans: 2, diff: "easy" },
+  { q: "7 个百是多少？", opts: ["7", "70", "700", "7000"], ans: 2, diff: "easy" },
+  { q: "6000 + 400 等于多少？", opts: ["640", "6400", "6040", "64000"], ans: 1, diff: "easy" },
+  { q: "4 个千是多少？", opts: ["400", "4000", "40000", "40"], ans: 1, diff: "easy" },
+  { q: "5 个百是多少？", opts: ["50", "500", "5000", "5"], ans: 1, diff: "easy" },
+  { q: "3000 + 500 等于多少？", opts: ["800", "3500", "3050", "35000"], ans: 1, diff: "easy" },
+  { q: "2000 + 3000 等于多少？", opts: ["500", "5000", "50000", "50"], ans: 1, diff: "easy" },
+
+  // 比较大小 33-40
+  { q: "3000 ○ 5000", opts: [">", "<", "=", "无法比较"], ans: 1, diff: "easy" },
+  { q: "7000 ○ 7000", opts: [">", "<", "=", "无法比较"], ans: 2, diff: "easy" },
+  { q: "1000 ○ 999", opts: [">", "<", "=", "无法比较"], ans: 0, diff: "easy" },
+  { q: "最大的四位数是几？", opts: ["1000", "9999", "999", "10000"], ans: 1, diff: "easy" },
+  { q: "最小的四位数是几？", opts: ["1000", "9999", "999", "10000"], ans: 0, diff: "easy" },
+  { q: "2000 ○ 2000", opts: [">", "<", "=", "无法比较"], ans: 2, diff: "easy" },
+  { q: "500 ○ 5000", opts: [">", "<", "=", "无法比较"], ans: 1, diff: "easy" },
+  { q: "900 ○ 1000", opts: [">", "<", "=", "无法比较"], ans: 1, diff: "easy" },
+
+  // ===== 中等（40 题 41-80）=====
+  // 数位 41-45
+  { q: "5063 中的“5”表示什么？", opts: ["5个百", "5个千", "5个十", "5个一"], ans: 1, diff: "medium" },
+  { q: "8009 中，百位和十位上的数分别是？", opts: ["0和0", "8和0", "0和9", "8和9"], ans: 0, diff: "medium" },
+  { q: "一个数的千位和个位都是 5，百位是 3，十位是 0，这个数是？", opts: ["5035", "5305", "5350", "5503"], ans: 1, diff: "medium" },
+  { q: "从 1000 数到 1005，需要数几个数？", opts: ["4个", "5个", "6个", "7个"], ans: 2, diff: "medium" },
+  { q: "一个数的千位是 8，百位是 3，十位是 0，个位是 6，这个数是？", opts: ["8306", "8360", "8036", "8603"], ans: 0, diff: "medium" },
+
+  // 读数 46-50
+  { q: "3050 读作什么？", opts: ["三千零五", "三千五十", "三千零五十", "三千五百"], ans: 2, diff: "medium" },
+  { q: "5005 读作什么？", opts: ["五千零五", "五千五", "五千零五十", "五千五百"], ans: 0, diff: "medium" },
+  { q: "7040 读作什么？", opts: ["七千四十", "七千零四", "七千零四十", "七千四百"], ans: 2, diff: "medium" },
+  { q: "9090 读作什么？", opts: ["九百九十", "九千零九", "九千零九十", "九千九百"], ans: 2, diff: "medium" },
+  { q: "4060 读作什么？", opts: ["四千六十", "四千零六", "四千零六十", "四千六百"], ans: 2, diff: "medium" },
+
+  // 写数 51-55
+  { q: "四千零六十写作什么？", opts: ["4060", "4006", "4600", "40060"], ans: 0, diff: "medium" },
+  { q: "七千零三写作什么？", opts: ["7003", "7030", "7300", "7700"], ans: 0, diff: "medium" },
+  { q: "五千五百五十写作什么？", opts: ["5050", "5550", "5505", "555"], ans: 1, diff: "medium" },
+  { q: "八千零六写作什么？", opts: ["8060", "8006", "8600", "806"], ans: 1, diff: "medium" },
+  { q: "三千零三十写作什么？", opts: ["3300", "3030", "3003", "303"], ans: 1, diff: "medium" },
+
+  // 组成 56-60
+  { q: "5308 由什么组成？", opts: ["5个千、3个百、8个十", "5个千、3个百、0个十、8个一", "5个千、3个百、8个一", "5个千、30个百、8个一"], ans: 1, diff: "medium" },
+  { q: "4 个千和 5 个十组成的数是？", opts: ["4500", "4050", "4005", "450"], ans: 1, diff: "medium" },
+  { q: "7005 里面有 7 个千和几个一？", opts: ["5个一", "50个一", "0个一", "5个十"], ans: 0, diff: "medium" },
+  { q: "3 个千、2 个百和 6 个一组成的数是？", opts: ["3260", "3206", "3026", "3602"], ans: 1, diff: "medium" },
+  { q: "最大的四位数加上 1 是多少？", opts: ["9998", "9999", "10000", "10001"], ans: 2, diff: "medium" },
+
+  // 比较大小 61-65
+  { q: "4562 ○ 4652", opts: [">", "<", "=", "无法比较"], ans: 1, diff: "medium" },
+  { q: "5080 ○ 5008", opts: [">", "<", "=", "无法比较"], ans: 0, diff: "medium" },
+  { q: "8900 ○ 9000", opts: [">", "<", "=", "无法比较"], ans: 1, diff: "medium" },
+  { q: "3333 ○ 3333", opts: [">", "<", "=", "无法比较"], ans: 2, diff: "medium" },
+  { q: "把 5005、5050、5500 按从小到大排列，正确的是？",
+    opts: ["5005 < 5050 < 5500", "5050 < 5005 < 5500", "5500 < 5050 < 5005", "5005 < 5500 < 5050"], ans: 0, diff: "medium" },
+
+  // 近似数 66-70
+  { q: "4985 约等于多少？", opts: ["4000", "5000", "4900", "6000"], ans: 1, diff: "medium" },
+  { q: "5030 约等于多少？", opts: ["5000", "6000", "5100", "4000"], ans: 0, diff: "medium" },
+  { q: "7980 约等于多少？", opts: ["7000", "7900", "8000", "9000"], ans: 2, diff: "medium" },
+  { q: "2995 约等于多少？", opts: ["2000", "2900", "3000", "4000"], ans: 2, diff: "medium" },
+  { q: "6050 约等于多少？", opts: ["6000", "7000", "6100", "5000"], ans: 0, diff: "medium" },
+
+  // 找规律 71-75
+  { q: "按规律填数：2000、3000、4000、____、6000", opts: ["4500", "5000", "5500", "3500"], ans: 1, diff: "medium" },
+  { q: "按规律填数：5000、4500、4000、____、3000", opts: ["4200", "3500", "3800", "3000"], ans: 1, diff: "medium" },
+  { q: "按规律填数：1010、1020、1030、____、1050", opts: ["1035", "1040", "1045", "1030"], ans: 1, diff: "medium" },
+  { q: "按规律填数：9000、8000、7000、____、5000", opts: ["6500", "6000", "5500", "7500"], ans: 1, diff: "medium" },
+  { q: "按规律填数：3000、3100、3200、____、3400", opts: ["3250", "3300", "3350", "3150"], ans: 1, diff: "medium" },
+
+  // 综合 76-80
+  { q: "一台洗衣机售价 2080 元，约是多少元？", opts: ["2000元", "2100元", "3000元", "2800元"], ans: 0, diff: "medium" },
+  { q: "一个四位数，千位上是 5，十位上是 8，其余各位上是 0，这个数是？", opts: ["5080", "5800", "5008", "508"], ans: 0, diff: "medium" },
+  { q: "下面各数中，只读一个零的是？", opts: ["5000", "5500", "5050", "5550"], ans: 2, diff: "medium" },
+  { q: "7000 比 6000 多多少？", opts: ["1", "10", "100", "1000"], ans: 3, diff: "medium" },
+  { q: "3000 比 8000 少多少？", opts: ["5000", "4000", "6000", "3000"], ans: 0, diff: "medium" },
+
+  // ===== 较难（20 题 81-100）=====
+  // 数位/组成 81-85
+  { q: "用 3、0、8、5 组成的最大四位数是？", opts: ["8530", "8503", "8350", "8035"], ans: 0, diff: "hard" },
+  { q: "用 3、0、8、5 组成的最小四位数是？", opts: ["3058", "3085", "3508", "3580"], ans: 0, diff: "hard" },
+  { q: "一个四位数，百位和十位都是 0，千位是 6，个位是 9，这个数是？", opts: ["6090", "6009", "6900", "9060"], ans: 1, diff: "hard" },
+  { q: "下面哪个数中的“5”表示 5 个百？", opts: ["5060", "3502", "1050", "5301"], ans: 1, diff: "hard" },
+  { q: "下面哪个数中的“8”表示 8 个十？", opts: ["8005", "3802", "1080", "8310"], ans: 2, diff: "hard" },
+
+  // 读数/写数 86-90
+  { q: "3003 读作什么？", opts: ["三千三", "三千零三", "三千零零三", "三千三十"], ans: 1, diff: "hard" },
+  { q: "5050 读作什么？", opts: ["五千零五", "五千零五十", "五千五", "五千五十"], ans: 1, diff: "hard" },
+  { q: "八千零八十写作什么？", opts: ["8080", "8008", "8800", "808"], ans: 0, diff: "hard" },
+  { q: "六千零六写作什么？", opts: ["6006", "6060", "6600", "6000"], ans: 0, diff: "hard" },
+  { q: "五千五百零五写作什么？", opts: ["5550", "5505", "5055", "5500"], ans: 1, diff: "hard" },
+
+  // 比较/近似 91-94
+  { q: "下面哪个数最接近 5000？", opts: ["4999", "5005", "4900", "5100"], ans: 0, diff: "hard" },
+  { q: "比 4999 大 1 的数是？", opts: ["5000", "5001", "4998", "50000"], ans: 0, diff: "hard" },
+  { q: "比 6000 小 1 的数是？", opts: ["5999", "6001", "5900", "5990"], ans: 0, diff: "hard" },
+  { q: "一台冰箱的价格是 4998 元，约是多少元？", opts: ["4000元", "4900元", "5000元", "6000元"], ans: 2, diff: "hard" },
+
+  // 综合 95-100
+  { q: "下面各数中，一个零也不读出来的是？", opts: ["3005", "3050", "3500", "5030"], ans: 2, diff: "hard" },
+  { q: "用 3、6、0、0 组成一个零都不读的四位数是？", opts: ["3006", "3060", "3600", "6030"], ans: 2, diff: "hard" },
+  { q: "图书馆有科技书 3020 本，故事书 2980 本，两种书大约共有多少本？",
+    opts: ["5000本", "6000本", "7000本", "4000本"], ans: 1, diff: "hard" },
+  { q: "800 和 8000 相比，8000 比 800 多多少？", opts: ["7200", "720", "72", "72000"], ans: 0, diff: "hard" },
+  { q: "按规律填数：1800、2000、2200、____、2600", opts: ["2300", "2400", "2500", "2100"], ans: 1, diff: "hard" },
+  { q: "按规律填数：5060、5070、5080、____、5100", opts: ["5085", "5090", "5095", "5080"], ans: 1, diff: "hard" }
+];
+
+// ===== 应用逻辑 =====
+var LABELS = ["A", "B", "C", "D"];
+var DIFF_MAP = { easy: "基础", medium: "中等", hard: "较难" };
+var DIFF_CLASS = { easy: "diff-easy", medium: "diff-medium", hard: "diff-hard" };
+
+var currentQuestions = [];
+var currentIndex = 0;
+var answers = [];
+var selectedOption = null;
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+function pickQuestions() {
+  var byDiff = { easy: [], medium: [], hard: [] };
+  for (var i = 0; i < ALL_QUESTIONS.length; i++) {
+    byDiff[ALL_QUESTIONS[i].diff].push(ALL_QUESTIONS[i]);
+  }
+  var picked = []
+    .concat(shuffle(byDiff.easy).slice(0, 4))
+    .concat(shuffle(byDiff.medium).slice(0, 4))
+    .concat(shuffle(byDiff.hard).slice(0, 2));
+  return shuffle(picked);
+}
+
+function renderQuestion() {
+  var q = currentQuestions[currentIndex];
+  document.getElementById("qNum").textContent = "第 " + (currentIndex + 1) + "/10 题";
+  diffTag = document.getElementById("diffTag");
+  diffTag.textContent = DIFF_MAP[q.diff];
+  diffTag.className = "difficulty-tag " + DIFF_CLASS[q.diff];
+  document.getElementById("progressFill").style.width = (currentIndex / 10 * 100) + "%";
+  document.getElementById("questionText").textContent = q.q;
+
+  var container = document.getElementById("optionsContainer");
+  container.innerHTML = "";
+  for (var i = 0; i < q.opts.length; i++) {
+    (function(idx) {
+      var div = document.createElement("div");
+      div.className = "option";
+      div.innerHTML = '<span class="label">' + LABELS[idx] + '</span>' + q.opts[idx];
+      div.addEventListener("click", function() { selectOption(idx); });
+      container.appendChild(div);
+    })(i);
+  }
+
+  selectedOption = null;
+  document.getElementById("btnNext").disabled = true;
+}
+
+function selectOption(index) {
+  if (selectedOption !== null) return;
+  var opts = document.querySelectorAll(".option");
+  for (var i = 0; i < opts.length; i++) {
+    if (i === index) opts[i].classList.add("selected");
+  }
+  selectedOption = index;
+  answers[currentIndex] = index;
+  document.getElementById("btnNext").disabled = false;
+}
+
+function showNext() {
+  if (currentIndex < 9) {
+    currentIndex++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById("quizArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+
+  var correct = 0;
+  var details = [];
+  for (var i = 0; i < currentQuestions.length; i++) {
+    var q = currentQuestions[i];
+    var userAns = answers[i];
+    var isCorrect = (userAns === q.ans);
+    if (isCorrect) correct++;
+    details.push({
+      question: q.q,
+      correctIdx: q.ans,
+      userIdx: userAns,
+      isCorrect: isCorrect,
+      opts: q.opts
+    });
+  }
+
+  document.getElementById("finalScore").textContent = correct;
+  var pct = correct / 10;
+  var commentBox = document.getElementById("commentBox");
+  commentBox.className = "comment";
+  if (pct >= 0.9) {
+    commentBox.textContent = "太棒了！你是数学小达人！";
+    commentBox.classList.add("excellent");
+  } else if (pct >= 0.7) {
+    commentBox.textContent = "做得不错！继续加油！";
+    commentBox.classList.add("good");
+  } else if (pct >= 0.5) {
+    commentBox.textContent = "还可以，多练习会更好！";
+    commentBox.classList.add("ok");
+  } else {
+    commentBox.textContent = "别灰心，再来一次吧！";
+    commentBox.classList.add("poor");
+  }
+
+  var detailDiv = document.getElementById("resultDetail");
+  detailDiv.innerHTML = "<h3 style='margin-bottom:12px'>答题详情</h3>";
+  for (var i = 0; i < details.length; i++) {
+    var d = details[i];
+    var item = document.createElement("div");
+    item.className = "item " + (d.isCorrect ? "correct-item" : "wrong-item");
+    var corrLabel = LABELS[d.correctIdx];
+    var corrText = d.opts[d.correctIdx];
+    var html = '<div class="q">' + (i + 1) + ". " + d.question + "</div>";
+    if (!d.isCorrect) {
+      var userLabel = d.userIdx !== undefined ? LABELS[d.userIdx] : "未选";
+      html += '<div class="ans">你选了：' + userLabel + "（错误）</div>";
+    }
+    html += '<div class="ans">正确答案：' + corrLabel + ". " + corrText + "</div>";
+    item.innerHTML = html;
+    detailDiv.appendChild(item);
+  }
+}
+
+function resetQuiz() {
+  currentQuestions = pickQuestions();
+  currentIndex = 0;
+  answers = [];
+  for (var i = 0; i < 10; i++) answers.push(undefined);
+  selectedOption = null;
+  document.getElementById("resultArea").classList.add("hidden");
+  document.getElementById("quizArea").classList.remove("hidden");
+  renderQuestion();
+}
+
+document.getElementById("btnNext").addEventListener("click", showNext);
+document.getElementById("btnReset").addEventListener("click", resetQuiz);
+document.getElementById("btnRetry").addEventListener("click", resetQuiz);
+
+resetQuiz();
+</script>
+</body>
+</html>
